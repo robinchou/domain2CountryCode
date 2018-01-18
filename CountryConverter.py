@@ -19,8 +19,11 @@ def convertFromIPOrHostname(IPOrHostname):
 	url = "http://freegeoip.net/json/" + IPOrHostname
 	try:
 		response = urllib2.urlopen(url)
-		jsonData = json.loads(response.read())
-		return jsonData['country_code']
+		countryCode = json.loads(response.read())['country_code']
+		if (countryCode is None or countryCode == ''):
+			return "ERROR_FREEGEOIP_NOT_FOUND"
+		else:
+			return countryCode
 	except urllib2.HTTPError as e:
 		if e.code == 404:
 			print "Error: target not found from freegeoip: %s" % IPOrHostname

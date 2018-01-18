@@ -5,7 +5,6 @@ import CountryCodeDBLoader
 import ClientDBLoader
 import CountryConverter
 import threading
-import thread
 import time
 import re
 
@@ -14,6 +13,7 @@ def convertHostnameToCountryCode(clientId,b2Url):
 
 	# break down if exceed max attempts for freegeoip API
 	if countryCode == "ERROR_FREEGEOIP_FORBBIDEN":
+		print "Exceed max attempts for freegeoip API, break down and please try again one hour later."
 		sys.exit("Exceed max attempts for freegeoip API, break down and please try again one hour later.")
 
 	# convert alpha2 code to alpha3 code unless the code is started with error 
@@ -27,6 +27,7 @@ def convertHostnameToCountryCode(clientId,b2Url):
 # init count
 count = 0
 results = RegistrationDBLoader.loadB2UrlFromDB()
+print "%d clients remaining..." % len(results)
 
 try:
 	for row in results:
@@ -44,8 +45,8 @@ try:
 				time.sleep(10)
 
 		b2Url,clientId = row
-		thread.start_new_thread(convertHostnameToCountryCode, (clientId,b2Url))
+		threading.Thread(target=convertHostnameToCountryCode,args=(clientId,b2Url)).start()
 
-except:
+except Exception, e:
 	print "Error: unable to start thread"
-	pass
+	print e

@@ -27,4 +27,6 @@ def loadAlpha3Code(alpha2Code):
 	# disconnect from server
 	db.close()
 
+	print "Fetched country code: %s" % result
+
 	return result

@@ -13,14 +13,14 @@ def updateVerifiedCountryCode(clientID, countryCode):
 	# TODO need check the country_verified is already updated?
 	sql = "update client set country_verified = '%s' where id = %d" % (countryCode, clientID)
 	try:
-	   # Execute the SQL command
-	   cursor.execute(sql)
-	   # Commit your changes in the database
-	   db.commit()
+		# Execute the SQL command
+		cursor.execute(sql)
+		# Commit your changes in the database
+		db.commit()
 	except:
-	   # Rollback in case there is any error
-	   db.rollback()
-	   print "DBERROR: failed to update countryCode[%s] for clientID[%s]" % (clientID, countryCode)
+		# Rollback in case there is any error
+		db.rollback()
+		print "DBERROR: failed to update countryCode[%s] for clientID[%s]" % (clientID, countryCode)
 
 	# disconnect from server
 	db.close()

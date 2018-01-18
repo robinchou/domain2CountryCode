@@ -13,7 +13,7 @@ def loadB2UrlFromDB():
 	cursor = db.cursor()
 
 	sql = "select r.* from registration as r left join client as c on r.client_id=c.id where \
-		c.country_verified='' limit 10"
+		c.country_verified='' limit 10000"
 	try:
 		# Execute the SQL command
 		cursor.execute(sql)
