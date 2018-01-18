@@ -29,6 +29,9 @@ def convertFromIPOrHostname(IPOrHostname):
 			print "Error: target not found from freegeoip: %s" % IPOrHostname
 			return "ERROR_FREEGEOIP_NOT_FOUND"
 		elif e.code == 403:
+			print "Error: exceed max numbers of attempt for FREEGEOIP API"
 			return "ERROR_FREEGEOIP_FORBBIDEN"
 		else:
+			print "Error: UNKOWN for %s \n" % IPOrHostname
+			print e
 			return "ERROR_FREEGEOIP_UNKOWN"
