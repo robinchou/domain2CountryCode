@@ -41,13 +41,6 @@ try:
 			# reset count
 			count = 0
 			time.sleep(20)
-			# # wait till all threads finished
-			# activeThreads = threading.enumerate()
-			# print activeThreads
-			# activeThreadsCount = threading.activeCount()
-			# while activeThreadsCount > 1:
-			# 	print "%d active threads remaining..." % activeThreadsCount
-			# 	time.sleep(10)
 
 		registrationID,b2Url = row
 		threadpool.apply_async(convertHostnameToCountryCode,args=(registrationID,b2Url))
@@ -55,3 +48,8 @@ try:
 except Exception, e:
 	print "Error: unable to start thread"
 	print e
+finally:
+	# close thread pool
+	threadpool.close()
+	# wait for all workers finished
+	threadpool.join()

@@ -22,10 +22,12 @@ def loadB2UrlFromDB():
 	   		b2UrlWithClientIds.append((row[0],row[4]))
 
 	except:
-	   print "Error: unable to load B2 url"
+		print "Error: unable to load B2 url"
+		raise
 
-	# disconnect from server
-	db.close()
+	finally:
+		# disconnect from server
+		db.close()
 
 	return b2UrlWithClientIds
 
@@ -48,6 +50,7 @@ def updateCountryCode(ID, countryCode):
 		# Rollback in case there is any error
 		db.rollback()
 		print "DBERROR: failed to update countryCode[%s] for ID[%s]" % (ID, countryCode)
-
-	# disconnect from server
-	db.close()
+		raise
+	finally:
+		# disconnect from server
+		db.close()
