@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 from urlparse import urlparse
-import urllib
 import urllib2
 import json
 
@@ -18,7 +17,7 @@ def convertFromUrl(httpUrl):
 def convertFromIPOrHostname(IPOrHostname):
 	url = "http://freegeoip.net/json/" + IPOrHostname
 	try:
-		response = urllib2.urlopen(url)
+		response = urllib2.urlopen(url, timeout = 5)
 		countryCode = json.loads(response.read())['country_code']
 		if (countryCode is None or countryCode == ''):
 			return "ERROR_FREEGEOIP_NOT_FOUND"
