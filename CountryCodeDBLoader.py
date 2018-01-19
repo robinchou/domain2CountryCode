@@ -21,12 +21,9 @@ def loadAlpha3Code(alpha2Code):
 			result = cursor.fetchone()[0]
 	except:
 		print "Failed to execute sql:\n %s" % (sql)
-		result = "ERROR_COUNTRY_CODE_DBERR"
-
-
-	# disconnect from server
-	db.close()
-
-	print "Fetched country code: %s" % result
+		raise
+	finally:
+		# disconnect from server
+		db.close()
 
 	return result
